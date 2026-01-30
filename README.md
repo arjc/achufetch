@@ -12,4 +12,4 @@
 | aura | unknown ❌ | infinite aura ♾ |
 
 
-![achufetch demo on terminal (WSL Debian)](https://https://github.com/arjc/achufetch/assets/blobs/demo.png)
+![achufetch demo on terminal (WSL Debian)](https://github.com/arjc/achufetch/blob/main/assets/demo.png)
