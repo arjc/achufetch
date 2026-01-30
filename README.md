@@ -1,3 +1,4 @@
+![achufetch demo on terminal (WSL Debian)](https://github.com/arjc/achufetch/blob/main/assets/demo.png)
 # run `achufetch` today on you cli!!!
 
 ## neoftech vs achufetch 
@@ -12,4 +13,3 @@
 | aura | unknown ❌ | infinite aura ♾ |
 
 
-![achufetch demo on terminal (WSL Debian)](https://github.com/arjc/achufetch/blob/main/assets/demo.png)
