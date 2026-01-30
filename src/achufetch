@@ -1,0 +1,55 @@
+#!/bin/bash
+B="\e[38;5;39m" C="\e[38;5;51m" O="\e[38;5;208m" G="\e[38;5;118m" F="\e[97m" R="\e[0m" A="\e[90m" UR=$(whoami) HO=$(hostname) OS=$(uname -o 2>/dev/null) KR=$(uname -r) TI=$(uptime -p) SH=$(basename "$SHELL") PR=$(lscpu | grep "Model name" | sed 's/Model name:[ ]*//') RA=$(free -h | awk '/Mem:/ {print $3 "/" $2}') ST=$(df -h / | awk 'NR==2 {print $3 "/" $2}')
+jibesh=$(cat << "EOF"
+               unnuuunuuunnujujjuna               
+            nuuuuuujjjujun    nnnnurjun           
+         rjnnurrjunnuuuuunnn  n  nn  unu          
+        ujnnnujajnjjjuuunnnjjnn        nn         
+        nnunujjn rrjrjjarjruunnuun     nju        
+       jurrjan  nujrj......aunnn   n   nju        
+      ajrjuuunnnnuja..........ajn n   uun         
+      nu.njjjunujj..............aun nnn           
+       njjajuuujjr..........jjjjuuunuau           
+       nnnnur.......................r..n          
+          r............................r          
+          .............................rn..       
+          .............................j....      
+          ..................................      
+          .................................       
+          ...............................         
+           ............................           
+            ..........................            
+             .........................            
+              .......................             
+               .....................              
+                ...................               
+                 ...............                  
+                   .........                      
+EOF
+)
+info=$(cat << EOF
+
+
+
+
+
+${G}${UR}${F}@${G}${HO}${R}
+
+${A} . ${O}OS ${F}==${C} $OS
+${A} . ${O}KR ${F}==${C} $KR
+${A} . ${O}Shell ${F}==${C} $SH
+
+${A} . ${O}Processor ${F}==${C} $PR
+${A} . ${O}Memory ${F}==${C} $RA
+${A} . ${O}Drive ${F}==${C} $ST
+${A} . ${O}Uptime ${F}==${C} $TI
+
+
+${A}Achufetch v1.0 2026
+${A}Open-source under MIT. Made with ${G}♥ ${A}by Arjun Liji
+EOF
+)
+paste <(echo "$jibesh") <(echo "$info") | while IFS=$'\t' read -r left right; do
+    printf "${F}%-45s${R} %b\n" "$left" "$right"
+done
+
