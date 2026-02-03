@@ -28,7 +28,7 @@ Open terminal / command prompt on your machine and paste the provided command ru
 `curl -sSL https://fetch.arjc.me/fetch | bash`
 ![Alt Text](https://github.com/arjc/achufetch/blob/main/assets/windows.gif)
 
-# run `achufetch` today on you cli!!!
+# run `achufetch` today on you cli!!! [Comming soon]
 
 ![achufetch demo on terminal (WSL Debian)](https://github.com/arjc/achufetch/blob/main/assets/demo.png)
 
