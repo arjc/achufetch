@@ -1,4 +1,5 @@
 # Try achu fetch now
+
 ## Windows / Linux
 Open terminal / command prompt on your machine and paste the provided command run achufetch on your machine
 `curl -sSL https://fetch.arjc.me/fetch | bash`
