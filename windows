@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cls
+
 B="\e[38;5;39m" C="\e[38;5;51m" O="\e[38;5;208m" G="\e[38;5;118m" F="\e[97m" R="\e[0m" A="\e[90m" UR=$(whoami) HO=$(hostname) OS=$(uname -o 2>/dev/null) KR=$(uname -r) TI=$(uptime -p) SH=$(basename "$SHELL") PR=$(lscpu | grep "Model name" | sed 's/Model name:[ ]*//') RA=$(free -h | awk '/Mem:/ {print $3 "/" $2}') ST=$(df -h / | awk 'NR==2 {print $3 "/" $2}')
 jibesh=$(cat << "EOF"
                unnuuunuuunnujujjuna               
