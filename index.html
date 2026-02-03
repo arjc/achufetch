@@ -5,21 +5,482 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AchuFetch</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=IBM+Plex+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <style>
-        body { background: black; box-sizing: border-box; padding: 0; margin: 0; color: white; font-family: 'Courier New', Courier, monospace; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: hsl(120, 100%, 4%);
+            color: #00ff00;
+            font-family: 'IBM Plex Mono', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        ::selection {
+            background: #00ff00;
+            color: #000;
+        }
+
+        a {
+            color: #00ff00;
+            text-decoration: none;
+            border-bottom: 1px dashed #00ff00;
+        }
+
+        a:hover {
+            background: #00ff00;
+            color: #000;
+        }
+
+        /* ═══════════════════════════════════════════════ */
+        /* HEADER / NAV                                    */
+        /* ═══════════════════════════════════════════════ */
+        nav {
+            background: #000;
+            border-bottom: 2px solid #00ff00;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 20px;
+            font-family: 'VT323', monospace;
+        }
+
+        .logo {
+            font-size: 24px;
+            letter-spacing: 2px;
+        }
+
+        .logo::before {
+            content: "$ ";
+            opacity: 0.6;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-links a::before {
+            content: "[";
+        }
+
+        .nav-links a::after {
+            content: "]";
+        }
+
+        /* ═══════════════════════════════════════════════ */
+        /* MAIN CONTAINER                                  */
+        /* ═══════════════════════════════════════════════ */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ═══════════════════════════════════════════════ */
+        /* ASCII HEADER                                    */
+        /* ═══════════════════════════════════════════════ */
+        .ascii-header {
+            font-family: 'VT323', monospace;
+            font-size: clamp(10px, 2vw, 16px);
+            text-align: center;
+            padding: 30px 0;
+            white-space: pre;
+            line-height: 1.2;
+            overflow-x: auto;
+        }
+
+        /* ═══════════════════════════════════════════════ */
+        /* COMMAND BOX                                     */
+        /* ═══════════════════════════════════════════════ */
+        .cmd-box {
+            border: 2px solid #00ff00;
+            margin: 20px 0;
+            background: #000;
+        }
+
+        .cmd-header {
+            background: #00ff00;
+            color: #000;
+            padding: 4px 10px;
+            font-weight: bold;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .cmd-body {
+            padding: 15px;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .cmd-prompt::before {
+            content: "machan@kamputer:~$ ";
+            opacity: 0.7;
+        }
+
+        .cmd-text {
+            background: #001a00;
+            padding: 2px 6px;
+            border: 1px solid #003300;
+            display: inline-block;
+            margin-top: 5px;
+            word-break: break-all;
+        }
+
+        .blink {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════ */
+        /* DEMO SECTION                                    */
+        /* ═══════════════════════════════════════════════ */
+        .demo-section {
+            margin: 40px 0;
+        }
+
+        .section-title {
+            border-bottom: 1px solid #00ff00;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            font-family: 'VT323', monospace;
+            font-size: 20px;
+        }
+
+        .section-title::before {
+            content: "## ";
+            opacity: 0.5;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .demo-card {
+            border: 1px solid #00ff00;
+            background: #000;
+        }
+
+        .demo-card-header {
+            background: #001a00;
+            padding: 8px 12px;
+            border-bottom: 1px solid #00ff00;
+            font-size: 12px;
+        }
+
+        .demo-card-header::before {
+            content: "┌─ ";
+        }
+
+        .demo-card-header::after {
+            content: " ─┐";
+        }
+
+        .demo-card img {
+            width: 100%;
+            display: block;
+            image-rendering: pixelated;
+        }
+
+        /* ═══════════════════════════════════════════════ */
+        /* COMPARISON TABLE                                */
+        /* ═══════════════════════════════════════════════ */
+        .table-container {
+            overflow-x: auto;
+            margin: 40px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th,
+        td {
+            border: 1px solid #00ff00;
+            padding: 10px 15px;
+            text-align: left;
+        }
+
+        th {
+            background: #00ff00;
+            color: #000;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        tr:nth-child(even) {
+            background: #001100;
+        }
+
+        tr:hover {
+            background: #002200;
+        }
+
+        .status-good::before {
+            content: "[✓] ";
+        }
+
+        .status-bad::before {
+            content: "[✗] ";
+            opacity: 0.5;
+        }
+
+        /* ═══════════════════════════════════════════════ */
+        /* STATS GRID                                      */
+        /* ═══════════════════════════════════════════════ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .stat-box {
+            border: 1px solid #00ff00;
+            padding: 15px;
+            text-align: center;
+            background: #000;
+        }
+
+        .stat-value {
+            font-family: 'VT323', monospace;
+            font-size: 32px;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ═══════════════════════════════════════════════ */
+        /* FOOTER                                          */
+        /* ═══════════════════════════════════════════════ */
+        footer {
+            border-top: 2px solid #00ff00;
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+            font-size: 12px;
+        }
+
+        footer::before {
+            content: "/* ";
+        }
+
+        footer::after {
+            content: " */";
+        }
+
+        /* ═══════════════════════════════════════════════ */
+        /* RESPONSIVE                                      */
+        /* ═══════════════════════════════════════════════ */
+        @media (max-width: 600px) {
+            .ascii-header {
+                font-size: 8px;
+            }
+
+            .sm-hidden {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* ═══════════════════════════════════════════════ */
+        /* DECORATIVE ELEMENTS                             */
+        /* ═══════════════════════════════════════════════ */
+        .divider {
+            text-align: center;
+            padding: 10px 0;
+            opacity: 0.5;
+            font-size: 12px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .terminal-line {
+            opacity: 0.3;
+            font-size: 11px;
+            margin: 5px 0;
+        }
     </style>
 </head>
 
-<body style="overflow: hidden;">
-    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
-        <h1 style="color: green;">AchuFetch</h1>
-        <code>
-            Try now using: 
-            <span style="background: #ccc; color: #000; padding: 1.5px 4px; border-radius: 2px; box-shadow: inset 0 0 3px #000;">curl -sSL https://fetch.arjc.me/fetch | bash</span>
-             on your terminal
-        </code>
+<body>
+
+    <nav>
+        <span class="logo">achufetch</span>
+        <ul class="nav-links sm-hidden">
+            <li><a href="https://github.com/arjc/achufetch">github</a></li>
+            <li><a href="https://arjc.me">arjc.me</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- ASCII Art Header -->
+        <div class="ascii-header">
+              .__            _____       __         .__     
+_____    ____ |  |__  __ ___/ ____\_____/  |_  ____ |  |__  
+\__  \ _/ ___\|  |  \|  |  \   __\/ __ \   __\/ ___\|  |  \ 
+ / __ \\  \___|   Y  \  |  /|  | \  ___/|  | \  \___|   Y  \
+(____  /\___  >___|  /____/ |__|  \___  >__|  \___  >___|  /
+     \/     \/     \/                 \/          \/     \/ 
+┌──────────────────────────────────────────────┐
+    A vishayam neofetch alternative 
+└──────────────────────────────────────────────┘
+        </div>
+
+        <div class="divider">═══════════════════════════════════════════════════════════════════════════════</div>
+
+        <!-- Install Command -->
+        <div class="cmd-box">
+            <div class="cmd-header">
+                <span>TERMINAL</span>
+                <span>bash</span>
+            </div>
+            <div class="cmd-body">
+                <div class="terminal-line"># Run achufetch on Windows / Linux / macOS</div>
+                <div class="cmd-prompt"></div>
+                <div class="cmd-text">curl -sSL https://fetch.arjc.me/fetch | bash</div>
+                <span class="blink">█</span>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-box">
+                <span class="stat-value">4 kB</span>
+                <span class="stat-label">Size</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-value">∞</span>
+                <span class="stat-label">Aura</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-value">Achu</span>
+                <span class="stat-label">ASCII Art</span>
+            </div>
+        </div>
+
+        <div class="divider">────────────────────────────────────────────────────────────────────────────────</div>
+
+        <!-- Demo Section -->
+        <div class="demo-section">
+            <h2 class="section-title">DEMO</h2>
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <div class="demo-card-header">just copy the command to your terminal / command prompt</div>
+                    <img src="assets/windows.gif" alt="achufetch running on Windows">
+                </div>
+            </div>
+        </div>
+
+        <div class="divider">────────────────────────────────────────────────────────────────────────────────</div>
+
+        <!-- Comparison Table -->
+        <div class="demo-section">
+            <h2 class="section-title">neofetch vs achufetch</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>neofetch</th>
+                            <th>achufetch</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Speed</td>
+                            <td class="status-bad">time dependant</td>
+                            <td class="status-good">good things take time</td>
+                        </tr>
+                        <tr>
+                            <td>Stats</td>
+                            <td class="status-bad">only system stats</td>
+                            <td class="status-good">beyond system stats</td>
+                        </tr>
+                        <tr>
+                            <td>Performance</td>
+                            <td class="status-bad">can only run on terminals</td>
+                            <td class="status-good">can run anywhere</td>
+                        </tr>
+                        <tr>
+                            <td>Size</td>
+                            <td class="status-bad">352 kB</td>
+                            <td class="status-good">4 kB</td>
+                        </tr>
+                        <tr>
+                            <td>ASCII Art</td>
+                            <td class="status-bad">limited distros</td>
+                            <td class="status-good">has achu's face 🔥</td>
+                        </tr>
+                        <tr>
+                            <td>Aura</td>
+                            <td class="status-bad">unknown</td>
+                            <td class="status-good">infinite ♾</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="divider">════════════════════════════════════════════════════════════════════════════════</div>
+
+        <!-- Quick Start -->
+        <div class="demo-section">
+            <h2 class="section-title">QUICK START</h2>
+            <div class="cmd-box">
+                <div class="cmd-header">
+                    <span>INSTRUCTIONS</span>
+                    <span>README.md</span>
+                </div>
+                <div class="cmd-body">
+                    <div class="terminal-line"># Step 1: Open terminal / command prompt</div>
+                    <div class="terminal-line"># Step 2: Run the following command</div>
+                    <br>
+                    <div class="cmd-prompt"></div>
+                    <div class="cmd-text">curl -sSL https://fetch.arjc.me/fetch | bash</div>
+                    <br><br>
+                    <div class="terminal-line"># Step 3: Enjoy the infinite aura</div>
+                    <div class="cmd-prompt"></div>
+                    <div class="cmd-text">achufetch</div>
+                </div>
+            </div>
+        </div>
 
     </div>
+
+    <footer>
+        achufetch by <a href="https://arjc.me">arjc</a> | run `achufetch` today on your cli
+        <br>
+        Open source under MIT
+    </footer>
+
 </body>
 
 </html>
